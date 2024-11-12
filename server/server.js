@@ -1,10 +1,10 @@
 require('dotenv').config();
 const productRoutes = require('./routes/product');
 const authRoutes = require('./routes/auth');
+const bodyParser = require('body-parser');
 const express = require('express');
 const sequelize = require('./db');
 const path = require('path');
-const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,14 +19,18 @@ app.use('/js', express.static(path.join(__dirname, '../client/js')));
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 
-const start = async () => {
-    try {
-        await sequelize.authenticate();
-        await sequelize.sync();
-        app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
-    } catch (e) {
-        console.error(e);
-    }
-};
-
-start();
+sequelize
+    .authenticate()
+    .then(() => {
+        console.log('Database connected successfully.');
+        return sequelize.sync();
+    })
+    .then(() => {
+        console.log('Database synchronized successfully.');
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.error('Error during database setup:', error);
+    });

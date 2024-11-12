@@ -213,6 +213,6 @@ if (orderForm) {
         localStorage.removeItem('cart');
 
         // Перенаправить на главную страницу
-        window.location.href = 'pages/products.html';
+        window.location.href = 'pages/index.html';
     });
 }

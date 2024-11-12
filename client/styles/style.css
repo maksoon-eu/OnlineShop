@@ -331,6 +331,15 @@ footer {
     border-radius: 4px;
 }
 
+.social-media ul li a {
+    color: #333;
+    text-decoration: none;
+}
+
+.social-media ul li a:hover {
+    color: #007bff;
+}
+
 @media (max-width: 768px) {
     .products-container {
         grid-template-columns: repeat(2, 1fr);
